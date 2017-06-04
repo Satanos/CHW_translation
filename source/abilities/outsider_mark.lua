@@ -10,9 +10,7 @@ function outsider_mark:CastFilterResultTarget( hTarget )
 	if self:GetCaster() == hTarget then
 		return UF_FAIL_CUSTOM
 	end
-	if hTarget:GetUnitName() == "npc_dota_hero_crystal_maiden" or hTarget:GetUnitName() == "npc_dota_hero_rubick" then
-		return UF_FAIL_CUSTOM
-	end
+
 	local nResult = UnitFilter( hTarget, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO, self:GetCaster():GetTeamNumber() )
 	if nResult ~= UF_SUCCESS then
 		return nResult
@@ -26,10 +24,6 @@ end
 function outsider_mark:GetCustomCastErrorTarget( hTarget )
 	if self:GetCaster() == hTarget then
 		return "#dota_hud_error_cant_cast_on_self"
-	end
-
-	if hTarget:GetUnitName() == "npc_dota_hero_crystal_maiden" or hTarget:GetUnitName() == "npc_dota_hero_rubick" then
-		return "#dota_hud_error_too_many_skills"
 	end
 
 	return ""
@@ -75,34 +69,25 @@ function modifier_outsider_mark:IsPurgable()
 	return false
 end
 
-function modifier_outsider_mark:OnCreated()
-	if IsServer() then
-		local caster = self:GetParent()
-
-		caster:AddAbility("outsider_blink"):SetLevel(self:GetAbility():GetLevel())
-	end
-end
-
-function modifier_outsider_mark:OnDestroy()
-	if IsServer() then
-		local caster = self:GetParent()
-		if caster:HasAbility("outsider_blink") then
-			local abil = caster:FindAbilityByName("outsider_blink")
-			abil:RemoveSelf()
-		end
-	end
-end
 
 function modifier_outsider_mark:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_ABILITY_LAYOUT
+	local funcs =
+	{
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+
 	}
 
 	return funcs
 end
 
-function modifier_outsider_mark:GetModifierAbilityLayout( params )
-	return 6
+
+function modifier_outsider_mark:GetModifierSpellAmplify_Percentage( params )
+	return self:GetAbility():GetSpecialValueFor("spell_amp")
+end
+
+function modifier_outsider_mark:GetModifierIncomingDamage_Percentage( params )
+	return self:GetAbility():GetSpecialValueFor("damage_red")
 end
 
 modifier_outsider_mark_enemy = class({})

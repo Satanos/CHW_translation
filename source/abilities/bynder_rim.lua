@@ -28,7 +28,8 @@ function bynder_rim:OnSpellStart ()
     local hCaster = self:GetCaster()
 
     local duration = self:GetSpecialValueFor ("duration")
-    if self:GetCaster():HasScepter() then
+
+    if self:GetCaster():HasTalent("special_bonus_unique_byonder") then
         duration = duration + 1
     end
 

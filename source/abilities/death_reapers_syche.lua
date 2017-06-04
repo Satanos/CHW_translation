@@ -60,6 +60,26 @@ function death_reapers_syche:OnSpellStart ()
                 ability = ability,
                 damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY + DOTA_DAMAGE_FLAG_HPLOSS,
             })
+            if self:GetCaster():HasModifier("modifier_death_dress") then
+              local vPos = self:GetCursorTarget():GetOrigin()
+              local vDirection = vPos - self:GetCaster():GetOrigin()
+            	vDirection.z = 0.0
+            	vDirection = vDirection:Normalized()
+              local info = {
+            		EffectName = "particles/hero_death/death_immortal_sunder.vpcf",
+            		Ability = self,
+            		vSpawnOrigin = self:GetCaster():GetOrigin(),
+            		fStartRadius = 1,
+            		fEndRadius = 1,
+            		vVelocity = vDirection * 1000,
+            		fDistance = 400,
+            		Source = self:GetCaster(),
+            		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_NONE
+            	}
+            	ProjectileManager:CreateLinearProjectile( info )
+            	EmitSoundOn( "Hero_DeathProphet.CarrionSwarm.Mortis", self:GetCaster() )
+              EmitSoundOn( "Hero_DeathProphet.CarrionSwarm.Damage.Mortis", hTarget )
+            end
         end
     end
 end

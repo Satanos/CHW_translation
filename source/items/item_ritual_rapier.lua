@@ -9,6 +9,10 @@ function item_ritual_rapier:GetIntrinsicModifierName ()
     return "modifier_item_ritual_rapier"
 end
 
+function item_ritual_rapier:OnSpellStart()
+    self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_item_satanic_unholy", {duration = self:GetSpecialValueFor("unholy_duration")} )
+end
+
 if modifier_item_ritual_rapier == nil then
     modifier_item_ritual_rapier = class ( {})
 end
@@ -64,10 +68,7 @@ function modifier_item_ritual_rapier:OnAttackLanded (params)
     if IsServer () then
         if params.attacker == self:GetParent () then
             local target = params.target
-            if target:GetUnitName() == "npc_dota_warlock_golem_1" or target:GetUnitName() == "npc_mega_greevil" or target:GetUnitName() == "npc_dota_lich_king" then
-                return nil
-            end
-            if target:IsBuilding() then
+            if target:IsAncient() or target:IsBuilding() then
                 return nil
             end
             self:GetParent():Heal(self:GetParent():GetAverageTrueAttackDamage(target)*(self:GetAbility():GetSpecialValueFor("feast_dmg")/100), self:GetAbility())

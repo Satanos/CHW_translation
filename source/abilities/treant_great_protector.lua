@@ -5,7 +5,12 @@ LinkLuaModifier( "modifier_treant_great_protector", "abilities/treant_great_prot
 
 function treant_great_protector:OnSpellStart()
 	EmitSoundOn( "Hero_Treant.NaturesGuise.On", self:GetCaster() )
-	self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_treant_great_protector", { duration = self:GetSpecialValueFor( "duration" ) } )
+	local duration = self:GetSpecialValueFor( "duration" )
+	if self:GetCaster():HasTalent("special_bonus_unique_groot") then
+			local value = self:GetCaster():FindTalentValue("special_bonus_unique_groot")
+			duration = duration + value
+	end
+	self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_treant_great_protector", { duration = duration } )
 end
 
 --------------------------------------------------------------------------------

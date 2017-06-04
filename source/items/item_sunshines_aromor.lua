@@ -48,7 +48,7 @@ function item_sunshines_aromor:OnSpellStart()
 
       for i, target in ipairs(targets) do  --Restore health and play a particle effect for every found ally.
         target:AddNewModifier(caster, self, "item_sunshines_aromor_reduce_modifier", {duration = 4})
-        ApplyDamage({attacker = caster, victim = target, damage = 200, damage_type = DAMAGE_TYPE_MAGICAL, ability = self}) 
+        ApplyDamage({attacker = caster, victim = target, damage = 200, damage_type = DAMAGE_TYPE_MAGICAL, ability = self})
         EmitSoundOn("DOTA_Item.DiffusalBlade.Target", caster)
       end
       return 1
@@ -81,18 +81,21 @@ return funcs
 end
 
 function item_sunshines_aromor_passive_modifier:GetModifierPhysical_ConstantBlock( params )
-    return self:GetParent():GetStrength() / 2
+    return self:GetParent():GetStrength() / 4
 end
 
 function item_sunshines_aromor_passive_modifier:OnTakeDamage( params )
     if params.unit == self:GetParent() then
-        if not self.damage then 
+				if self:GetParent():IsIllusion() then 
+					return nil
+				end
+        if not self.damage then
           self.damage = 0
         end
         self.damage = self.damage + params.damage
         if self.damage >= 1500 then
              self.damage = 0
-            if IsServer() then 
+            if IsServer() then
                 self:GetParent():Purge(false, true, false, true, false)
                 local caster = self:GetParent()
                 EmitSoundOn("Item.GuardianGreaves.Target", self:GetParent())
@@ -104,9 +107,9 @@ function item_sunshines_aromor_passive_modifier:OnTakeDamage( params )
                 ParticleManager:SetParticleControl(nFXIndex, 3, Vector(1, 0, 0))
                 local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
-                for i, target in ipairs(targets) do  
+                for i, target in ipairs(targets) do
                     target:AddNewModifier(caster, self:GetAbility(), "item_shine_of_sea_modifier_reduce_modifier", {duration = 4})
-                    ApplyDamage({attacker = caster, victim = target, damage = 200, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()}) 
+                    ApplyDamage({attacker = caster, victim = target, damage = 200, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
                     EmitSoundOn("DOTA_Item.DiffusalBlade.Target", caster)
                 end
             end
@@ -215,7 +218,7 @@ function item_sunshines_aromor_passive_modifier_aura:IsBuff()
       return false
     else
       return true
-    end 
+    end
 end
 
 function item_sunshines_aromor_passive_modifier_aura:GetModifierPhysicalArmorBonus( params )
@@ -223,7 +226,7 @@ function item_sunshines_aromor_passive_modifier_aura:GetModifierPhysicalArmorBon
       return -10
     else
       return 20
-    end 
+    end
 end
 
 function item_sunshines_aromor_passive_modifier_aura:GetModifierAttackSpeedBonus_Constant( params )
@@ -231,5 +234,5 @@ function item_sunshines_aromor_passive_modifier_aura:GetModifierAttackSpeedBonus
       return -50
     else
       return 50
-    end 
+    end
 end

@@ -58,7 +58,7 @@
   "npc_dota_hero_venomancer"          "1"
   "npc_dota_hero_troll_warlord"       "1"
   "npc_dota_hero_razor"               "1"
-  "npc_dota_hero_tinker"              "0"
+  "npc_dota_hero_gyrocopter"            "1"
   "npc_dota_hero_vengefulspirit"      "1"
   "npc_dota_hero_legion_commander"    "1"
   "npc_dota_hero_tusk" 				"1"
@@ -97,6 +97,5 @@
   "npc_dota_hero_bristleback"		"1"
   "npc_dota_hero_shadow_shaman" "1"
   "npc_dota_hero_disruptor" "1"
-  "npc_dota_hero_queenofpain" "1"
-  "npc_dota_hero_jakiro" "1"
+  "npc_dota_hero_jakiro"    "1"
 }

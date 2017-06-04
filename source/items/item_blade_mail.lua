@@ -47,15 +47,24 @@ function modifier_blade_mail:OnTakeDamage( params )
     if IsServer() then
         if params.unit == self:GetParent() then
             local target = params.attacker
+
             if target == self:GetParent() then
                 return
             end
+
             if target:GetClassname() == "ent_dota_fountain" then
         	   return
-            else
-                target:ModifyHealth(target:GetHealth() - params.damage, self:GetAbility(), true, 0)
-            end
-        	EmitSoundOn("DOTA_Item.BladeMail.Damage", target)
+					  end
+
+						ApplyDamage ( {
+                victim = target,
+                attacker = self:GetParent(),
+                damage = params.damage,
+                damage_type = params.damage_type,
+                ability = self:GetAbility(),
+                damage_flags = DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_HPLOSS,
+            })
+        		EmitSoundOn("DOTA_Item.BladeMail.Damage", target)
         end
     end
 end

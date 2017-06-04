@@ -27,7 +27,7 @@ function draks_double_edge:OnSpellStart()
 
         		EmitSoundOn( "Hero_Centaur.DoubleEdge", self:GetCaster() )
 
-            ApplyDamage({attacker = self:GetCaster(), victim = hTarget, damage = self:GetSpecialValueFor("edge_damage") + (self:GetCaster():GetStrength()*self:GetSpecialValueFor("damage_per_strngth")), ability = self, damage_type = DAMAGE_TYPE_PHYSICAL})
+            ApplyDamage({attacker = self:GetCaster(), victim = hTarget, damage = self:GetSpecialValueFor("edge_damage") + (self:GetCaster():GetHealthRegen()*self:GetSpecialValueFor("damage_per_strngth")), ability = self, damage_type = DAMAGE_TYPE_PHYSICAL})
     		end
   	end
 end

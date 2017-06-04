@@ -387,7 +387,7 @@
             }
         }
     }
-  
+
 	"special_bonus_attack_damage_90"
 	{
 		"AbilitySpecial"
@@ -436,6 +436,17 @@
         }
     }
 	}
+  "special_bonus_cast_range_200"  ////300 gold boost
+  {
+    "AbilitySpecial"
+    {
+        "01"
+        {
+          "var_type"					"FIELD_INTEGER"
+          "value"				"500"
+        }
+    }
+  }
   //=================================================================================================================
 	// Ability: Special Bonus
 	//=================================================================================================================
@@ -446,7 +457,18 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"				"400"
+				"value"				"650"
+			}
+		}
+	}
+  "special_bonus_spell_amplify_15"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"35"
 			}
 		}
 	}

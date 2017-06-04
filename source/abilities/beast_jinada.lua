@@ -46,17 +46,14 @@ function modifier_beast_jinada:OnAttackLanded(params)
     if IsServer () then
         if params.attacker == self:GetParent () then
             local target = params.target
-            local flDamage = self:GetAbility():GetSpecialValueFor("creeps_per_damage")
+            local flDamage = self:GetAbility():GetSpecialValueFor("creep_dmg") + ((self:GetAbility():GetSpecialValueFor("creeps_per_damage")/100) * target:GetMaxHealth())
             if self:GetParent():HasScepter() then
                 flDamage = flDamage + ((self:GetAbility():GetSpecialValueFor("creeps_per_damage_scepter")/100)*target:GetMaxHealth())
-            end
-            if target:IsAncient() or target:IsConsideredHero() then
-                return nil
             end
             if target:IsRealHero() then
                 flDamage = self:GetParent():GetLastHits() / 2
             else
-                if target:IsBuilding() or target:GetUnitName() == "npc_dota_warlock_golem_1" or target:GetUnitName() == "npc_mega_greevil" then
+                if target:IsAncient() or target:IsConsideredHero() or target:IsBuilding() or target:GetUnitName() == "npc_dota_warlock_golem_1" or target:GetUnitName() == "npc_mega_greevil" then
                     flDamage = 0
                 else
                     flDamage = flDamage

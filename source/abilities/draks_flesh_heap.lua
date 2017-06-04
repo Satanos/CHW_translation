@@ -26,6 +26,7 @@ end
 function modifier_draks_flesh_heap:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_EVENT_ON_HERO_KILLED
 	}
 
@@ -35,6 +36,10 @@ end
 
 function modifier_draks_flesh_heap:GetModifierBonusStats_Strength( params )
 	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("strength_buff_amount")
+end
+
+function modifier_draks_flesh_heap:GetModifierConstantHealthRegen( params )
+	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("health_regen")
 end
 
 function modifier_draks_flesh_heap:OnHeroKilled(params)

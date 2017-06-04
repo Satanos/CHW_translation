@@ -76,7 +76,9 @@ function modifier_item_death_scyche:OnAttackLanded (params)
             params.target:AddNewModifier (self:GetCaster (), self:GetAbility (), "modifier_item_death_scyche_slowing", { duration = 5 })
             local cold_attack_damage = hAbility:GetSpecialValueFor ("cold_attack_damage")
             EmitSoundOn ("Hero_Ancient_Apparition.Attack", params.target)
-            ApplyDamage ( { attacker = hAbility:GetCaster (), victim = params.target, ability = hAbility, damage = cold_attack_damage, damage_type = DAMAGE_TYPE_PURE })
+            if not params.target:IsTower() then
+              ApplyDamage ( { attacker = hAbility:GetCaster (), victim = params.target, ability = hAbility, damage = cold_attack_damage, damage_type = DAMAGE_TYPE_PURE })
+            end
         end
     end
     return 0

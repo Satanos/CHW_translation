@@ -9,7 +9,7 @@ function item_moon_shard_marvel:GetIntrinsicModifierName()
 	return "modifier_item_moon_shard_marvel"
 end
 
-function item_moon_shard_marvel:OnSpellStart() 
+function item_moon_shard_marvel:OnSpellStart()
 	if IsServer() then
 		EmitSoundOn("Item.MoonShard.Consume", self:GetCaster())
 		if not self:GetCaster():HasModifier("modifier_moon_shard_activated_as") then
@@ -71,11 +71,12 @@ function modifier_moon_shard_activated_as:RemoveOnDeath()
 	return false
 end
 
-function modifier_moon_shard_activated_as:DeclareFunctions() 
+function modifier_moon_shard_activated_as:DeclareFunctions()
 local funcs = {
     MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		---MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
     MODIFIER_PROPERTY_BONUS_NIGHT_VISION
-}
+	}
 
 	return funcs
 end
@@ -83,6 +84,14 @@ end
 function modifier_moon_shard_activated_as:GetBonusNightVision( params )
  	 return 150
 end
+
+--[[function modifier_moon_shard_activated_as:GetModifierBaseAttackTimeConstant( params )
+	if self:GetStackCount() == 0 then
+   	   return 0.03
+   	else
+   	   return 0.03*self:GetStackCount()
+   	end
+end]]
 
 function modifier_moon_shard_activated_as:GetModifierAttackSpeedBonus_Constant( params )
 	if self:GetStackCount() == 0 then

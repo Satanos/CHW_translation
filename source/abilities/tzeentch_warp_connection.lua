@@ -3,10 +3,6 @@ LinkLuaModifier( "modifier_tzeentch_warp_connection", "abilities/tzeentch_warp_c
 if tzeentch_warp_connection == nil then tzeentch_warp_connection = class({}) end
 
 function tzeentch_warp_connection:GetCooldown (nLevel)
-    if self:GetCaster ():HasScepter () then
-        return self:GetSpecialValueFor("cooldown_scepter")
-    end
-
     return self.BaseClass.GetCooldown (self, nLevel)
 end
 
@@ -35,10 +31,10 @@ function tzeentch_warp_connection:OnSpellStart ()
     EmitSoundOn ("Hero_FacelessVoid.TimeDilation.Cast", self:GetCaster () )
 
     local units = FindUnitsInRadius( self:GetCaster():GetTeamNumber(), self:GetCaster():GetOrigin(), self:GetCaster(), 999999, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false )
-	if #units > 0 then
-		for _,unit in pairs(units) do
-			unit:AddNewModifier( self:GetCaster(), self, "modifier_tzeentch_warp_connection", { duration = self.duration } )
-		end
+	  if #units > 0 then
+  	  for _,unit in pairs(units) do
+  			unit:AddNewModifier( self:GetCaster(), self, "modifier_tzeentch_warp_connection", { duration = self.duration } )
+  		end
 	end
 end
 

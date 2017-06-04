@@ -29,10 +29,10 @@ function modifier_quicsilver_random:OnAbilityFullyCast( params )
 	 if params.unit == self:GetParent() then
 		 if RollPercentage(self:GetAbility():GetSpecialValueFor("refresh_chance_pct")) then
 		 	if params.ability:IsItem() then
-		 		return
+		 		return nil
 		 	end
-			if params.ability:GetAbilityType() == DOTA_ABILITY_TYPE_ULTIMATE then
-				return
+			if params.ability:GetAbilityName() == "quicsilver_abstract_run" then
+				return nil
 			end
 		 	params.ability:EndCooldown()
 		 	local nFXIndex = ParticleManager:CreateParticle ("particles/refresh_2.vpcf", PATTACH_CUSTOMORIGIN, self:GetParent());

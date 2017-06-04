@@ -65,4 +65,17 @@ function lich_king_cold_reaper:OnSpellStart()
           end
        end
     end
+    local count = 0
+    for _, unit in pairs(targets) do
+      if unit:IsRealHero() then
+        count = count + 1
+      end
+    end
+    local pID = self:GetCaster():GetPlayerOwnerID()
+    if GameRules.Globals.Quests[pID] and GameRules.Globals.Quests[pID].quest == 3 then
+      if count == 5 then
+        GameRules.Globals.Quests[pID].state = 1
+        CustomNetTables:SetTableValue( "globals", "quest_selected", GameRules.Globals.Quests )
+      end
+    end
 end

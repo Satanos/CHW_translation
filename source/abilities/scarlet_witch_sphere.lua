@@ -23,11 +23,18 @@ function scarlet_witch_sphere_thinker:OnCreated (event)
     local thinker_pos = thinker:GetAbsOrigin()
     self.team_number = thinker:GetTeamNumber ()
     self.radius = ability:GetSpecialValueFor ("radius")
-    local particle = ParticleManager:CreateParticle ("particles/scarlet_witch_sphere.vpcf", PATTACH_WORLDORIGIN, thinker)
-    ParticleManager:SetParticleControl(particle, 0, thinker_pos)
-    ParticleManager:SetParticleControl(particle, 1, Vector (self.radius, self.radius, 0))
-    ParticleManager:SetParticleControl(particle, 3, thinker_pos)
-    self:AddParticle( particle, false, false, -1, false, true )
+    if Util:PlayerEquipedItem(self:GetCaster():GetPlayerOwnerID(), "scarlet_armor") then
+      local particle = ParticleManager:CreateParticle ("particles/units/heroes/hero_arc_warden/arc_warden_magnetic.vpcf", PATTACH_WORLDORIGIN, thinker)
+      ParticleManager:SetParticleControl(particle, 0, thinker_pos)
+      ParticleManager:SetParticleControl(particle, 1, Vector (self.radius, self.radius, 0))
+      self:AddParticle( particle, false, false, -1, false, true )
+    else
+      local particle = ParticleManager:CreateParticle ("particles/scarlet_witch_sphere.vpcf", PATTACH_WORLDORIGIN, thinker)
+      ParticleManager:SetParticleControl(particle, 0, thinker_pos)
+      ParticleManager:SetParticleControl(particle, 1, Vector (self.radius, self.radius, 0))
+      ParticleManager:SetParticleControl(particle, 3, thinker_pos)
+      self:AddParticle( particle, false, false, -1, false, true )
+    end
     EmitSoundOn("Hero_ArcWarden.MagneticField", self:GetCaster())
 end
 
@@ -68,4 +75,13 @@ function scarlet_witch_sphere_modifier:CheckState()
     }
 
     return state
+end
+
+function scarlet_witch_sphere_modifier:DeclareFunctions ()
+    return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+end
+
+
+function scarlet_witch_sphere_modifier:GetModifierAttackSpeedBonus_Constant (params)
+    return -1000
 end

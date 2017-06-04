@@ -57,19 +57,30 @@ function modifier_infinity_black_hole_thinker:OnCreated(event)
         EmitSoundOn("Hero_Enigma.BlackHole.Cast.Chasm", thinker)
         thinker:EmitSound ("enigma_enig_ability_black_01")
 
-
-        local bhParticle1 = ParticleManager:CreateParticle ("particles/hero_enigma/enigma_blackhole.vpcf", PATTACH_WORLDORIGIN, thinker)
-        ParticleManager:SetParticleControl(bhParticle1, 0, thinker_pos + Vector (0, 0, 65))
-        ParticleManager:SetParticleControl(bhParticle1, 1, thinker_pos + Vector (0, 0, 65))
-        ParticleManager:SetParticleControl(bhParticle1, 2, thinker_pos + Vector (0, 0, 65))
-        ParticleManager:SetParticleControl(bhParticle1, 3, thinker_pos + Vector (0, 0, 65))
-        ParticleManager:SetParticleControl(bhParticle1, 6, Vector (self.radius, self.radius, 0))
-        ParticleManager:SetParticleControl(bhParticle1, 7, thinker_pos + Vector (0, 0, 65))
-        ParticleManager:SetParticleControl(bhParticle1, 8, thinker_pos + Vector (0, 0, 65))
-        ParticleManager:SetParticleControl(bhParticle1, 9, thinker_pos + Vector (0, 0, 65))
-        ParticleManager:SetParticleControl(bhParticle1, 20, Vector (self.radius, self.radius, 0))
-
-        self:AddParticle( bhParticle1, false, false, -1, false, true )
+        if Util:PlayerEquipedItem(self:GetCaster():GetPlayerOwnerID(), "enigma_bracers") == true then
+          local bhParticle1 = ParticleManager:CreateParticle ("particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_ti5.vpcf", PATTACH_WORLDORIGIN, thinker)
+          ParticleManager:SetParticleControl(bhParticle1, 0, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 1, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 2, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 3, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 6, Vector (self.radius, self.radius, 0))
+          ParticleManager:SetParticleControl(bhParticle1, 7, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 8, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 9, thinker_pos + Vector (0, 0, 65))
+          self:AddParticle( bhParticle1, false, false, -1, false, true )
+        else
+          local bhParticle1 = ParticleManager:CreateParticle ("particles/hero_enigma/enigma_blackhole.vpcf", PATTACH_WORLDORIGIN, thinker)
+          ParticleManager:SetParticleControl(bhParticle1, 0, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 1, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 2, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 3, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 6, Vector (self.radius, self.radius, 0))
+          ParticleManager:SetParticleControl(bhParticle1, 7, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 8, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 9, thinker_pos + Vector (0, 0, 65))
+          ParticleManager:SetParticleControl(bhParticle1, 20, Vector (self.radius, self.radius, 0))
+          self:AddParticle( bhParticle1, false, false, -1, false, true )
+        end
         ScreenShake(thinker:GetOrigin (), 100, 100, 6, 9999, 0, true)
     end
 end

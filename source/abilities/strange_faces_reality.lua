@@ -47,7 +47,7 @@ function OnTimerThink()
 function strange_faces_reality:OnSpellStart(  )
     local caster = self:GetCaster()
     for hUnit, data in pairs(tStates) do
-        if hUnit:GetUnitName() ~= "npc_dota_hero_wisp" then
+        if hUnit:GetUnitName() ~= "npc_dota_hero_wisp" and hUnit:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
           if hUnit:IsAlive() == false then
                hUnit:RespawnHero(false, false, true)
                hUnit:SetHealth(data[0].health + (hUnit:GetMaxHealth()/2) + 300)

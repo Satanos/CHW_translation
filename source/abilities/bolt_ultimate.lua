@@ -9,9 +9,18 @@ function bolt_ultimate:GetCooldown( nLevel )
 
     return self.BaseClass.GetCooldown( self, nLevel )
 end
+
+function bolt_ultimate:GetAbilityTextureName()
+	if self:GetCaster():HasModifier("modifier_bolt_arcana") then
+		return "custom/bolt_ult_arcana"
+	end
+	return "custom/bolt_ultimate"
+end
+
 function bolt_ultimate:GetBehavior()
     return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK
 end
+
 function bolt_ultimate:OnSpellStart()
     EmitSoundOn( "chw.bolt_ulti" , self:GetCaster() )
     EmitSoundOn( "Hero_Beastmaster.Primal_Roar" , self:GetCaster() )
@@ -26,9 +35,34 @@ function bolt_ultimate:OnSpellStart()
     self.duration = self:GetSpecialValueFor( "dur" )
     self.vision_duration = 4
     self.wave_width = 800 - 300
+    local projectile = "particles/hero_black_bolt/black_bolt_quasisonic_scream.vpcf"
+
+    if self:GetCaster():HasModifier("modifier_bolt_arcana") then
+  		projectile = "particles/hero_black_bolt/arcana/black_bolt_ult_arcana.vpcf"
+      local pos = self:GetCursorPosition() - self:GetCaster():GetOrigin()
+
+      local nFXIndex = ParticleManager:CreateParticle( "particles/hero_black_bolt/arcana/black_bolt_ult_arcana_wave.vpcf", PATTACH_CUSTOMORIGIN, nil );
+  		ParticleManager:SetParticleControl( nFXIndex, 0, self:GetCaster():GetAbsOrigin() );
+  		ParticleManager:SetParticleControl( nFXIndex, 1, pos);
+      ParticleManager:SetParticleControl( nFXIndex, 3, self:GetCaster():GetAbsOrigin() );
+      ParticleManager:SetParticleControl( nFXIndex, 4, self:GetCaster():GetAbsOrigin() );
+      ParticleManager:SetParticleControl( nFXIndex, 5, self:GetCaster():GetAbsOrigin() );
+      ParticleManager:SetParticleControl( nFXIndex, 10, self:GetCaster():GetAbsOrigin() );
+  		ParticleManager:ReleaseParticleIndex( nFXIndex );
+
+      local nFXIndex = ParticleManager:CreateParticle( "particles/hero_black_bolt/arcana/black_bolt_ult_arcana_exp.vpcf", PATTACH_CUSTOMORIGIN, nil );
+  		ParticleManager:SetParticleControl( nFXIndex, 0, self:GetCaster():GetAbsOrigin() );
+  		ParticleManager:SetParticleControl( nFXIndex, 1, Vector(1, 1, 1) );
+      ParticleManager:SetParticleControl( nFXIndex, 2, Vector(1, 1, 1) );
+      ParticleManager:SetParticleControl( nFXIndex, 3, self:GetCaster():GetAbsOrigin() );
+  		ParticleManager:ReleaseParticleIndex( nFXIndex );
+
+  		EmitSoundOn( "Hero_MonkeyKing.Spring.Water", self:GetCaster() )
+      EmitSoundOn( "Hero_MonkeyKing.Spring.Impact.Water", self:GetCaster() )
+  	end
 
     local info = {
-        EffectName = "particles/hero_black_bolt/black_bolt_quasisonic_scream.vpcf",
+        EffectName = projectile,
         Ability = self,
         vSpawnOrigin = self:GetCaster():GetOrigin(),
         fStartRadius = 100,
@@ -61,7 +95,7 @@ function bolt_ultimate:OnProjectileHit( hTarget, vLocation )
         if self:GetCaster():HasTalent("special_bonus_unique_black_bolt") then
             self.damage = self.damage * 2.5
         end
-        
+
         local damage = {
             victim = hTarget,
             attacker = self:GetCaster(),

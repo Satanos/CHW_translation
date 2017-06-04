@@ -53,7 +53,7 @@ function modifier_death_touch_of_death:OnAttackLanded (params)
                 end
                 ApplyDamage ( { attacker = self:GetCaster (), victim = target, ability = hAbility, damage = iDamage, damage_type = DAMAGE_TYPE_PHYSICAL })
                 debuff:SetStackCount (debuff_counts + 1)
-                if debuff_counts >= 99 then
+                if debuff_counts >= self:GetAbility():GetSpecialValueFor("stacks_to_kill") then
                     target:Kill (hAbility, self:GetCaster ())
                     if self:GetCaster():HasModifier("modifier_death") then
                         local mod = self:GetCaster():FindModifierByName("modifier_death")

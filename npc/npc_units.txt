@@ -463,9 +463,9 @@
 		// General
 		//
 		"BaseClass"					"npc_dota_creep_lane"	// Class of entity of link to.
-		"Model"						"models/creeps/lane_creeps/creep_radiant_ranged/radiant_ranged.vmdl"	// Model.
+		"Model"						"models/creeps/creeps_range/radiant/creep_ranged.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
-		"ModelScale" 					".88"
+		"ModelScale" 					".28"
 		"Level"						"2"
 
 		// Abilities
@@ -556,9 +556,9 @@
 		// General
 		//
 		"BaseClass"					"npc_dota_creep_lane"	// Class of entity of link to.
-		"Model"						"models/creeps/lane_creeps/creep_radiant_ranged/radiant_ranged.vmdl"	// Model.
+		"Model"						"models/creeps/creeps_range/radiant/creep_ranged_mega.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
-		"ModelScale"				"1.12"
+		"ModelScale"				"0.32"
 		"Level"						"1"
 
 		// Abilities
@@ -649,9 +649,9 @@
 		// General
 		//
 		"BaseClass"					"npc_dota_creep_lane"	// Class of entity of link to.
-		"Model"						"models/creeps/lane_creeps/creep_radiant_ranged/radiant_ranged_mega.vmdl"	// Model.
+		"Model"						"models/creeps/creeps_range/radiant/creep_ranged_mega.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
-		"ModelScale"				"1.12"
+		"ModelScale"				"0.32"
 		"Level"						"1"
 
 		// Abilities
@@ -742,7 +742,7 @@
 		// General
 		//
 		"BaseClass"					"npc_dota_creep_lane"	// Class of entity of link to.
-		"Model"						"models/creeps/lane_creeps/creep_bad_melee/creep_bad_melee.vmdl"	// Model.
+		"Model"						"models/creeps/lane_creeps/creep_bad_melee_diretide/creep_bad_melee_diretide.vmdl"	// Model.
 		"SoundSet"					"Creep_Bad_Melee"					// Name of sound set.
 		"ModelScale" 					".93"
 		"Level"						"3"
@@ -835,7 +835,7 @@
 		// General
 		//
 		"BaseClass"					"npc_dota_creep_lane"	// Class of entity of link to.
-		"Model"						"models/creeps/lane_creeps/creep_bad_melee/creep_bad_melee.vmdl"	// Model.
+		"Model"						"models/creeps/lane_creeps/creep_bad_melee_diretide/creep_bad_melee_diretide.vmdl"	// Model.
 		"SoundSet"					"Creep_Bad_Melee_Mega"					// Name of sound set.
 		"ModelScale"				"1.12"
 		"Level"						"1"
@@ -928,7 +928,7 @@
 		// General
 		//
 		"BaseClass"					"npc_dota_creep_lane"	// Class of entity of link to.
-		"Model"						"models/creeps/lane_creeps/creep_bad_melee/creep_bad_melee_mega.vmdl"	// Model.
+		"Model"						"models/creeps/lane_creeps/creep_bad_melee_diretide/creep_bad_melee_diretide.vmdl"	// Model.
 		"SoundSet"					"Creep_Bad_Melee_Mega"					// Name of sound set.
 		"ModelScale"				"1.12"
 		"Level"						"1"
@@ -1021,9 +1021,9 @@
 		// General
 		//
 		"BaseClass"					"npc_dota_creep_lane"	// Class of entity of link to.
-		"Model"						"models/creeps/lane_creeps/creep_radiant_melee/radiant_melee.vmdl"	// Model.
+		"Model"						"models/creeps/creep_meee_mega/creep_melee_enemy.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
-		"ModelScale" 					"0.93"
+		"ModelScale" 					"0.23"
 		"Level"						"3"
 
 		// Abilities
@@ -1114,9 +1114,9 @@
 		// General
 		//
 		"BaseClass"					"npc_dota_creep_lane"	// Class of entity of link to.
-		"Model"						"models/creeps/lane_creeps/creep_radiant_melee/radiant_melee.vmdl"	// Model.
+		"Model"						"models/creeps/creep_meee_mega/creep_melee_enemy.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Melee_Mega"					// Name of sound set.
-		"ModelScale"				"1.12"
+		"ModelScale"				"0.32"
 		"Level"						"1"
 
 			// Abilities
@@ -1207,9 +1207,9 @@
 		// General
 		//
 		"BaseClass"					"npc_dota_creep_lane"	// Class of entity of link to.
-		"Model"						"models/creeps/lane_creeps/creep_radiant_melee/radiant_melee_mega.vmdl"	// Model.
+		"Model"						"models/creeps/creep_meee_mega/creep_melee_enemy.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Melee_Mega"					// Name of sound set.
-		"ModelScale"				"1.12"
+		"ModelScale"				"0.32"
 		"Level"						"1"
 
 			// Abilities
@@ -9469,11 +9469,11 @@
 		"AbilityLayout"				"6"		// changes when we change to flying -> "5"
 
 		"Ability1"					"courier_return_to_base"
-		"Ability2"					"courier_go_to_secretshop"		
+		"Ability2"					"courier_go_to_secretshop"
 		"Ability3"					"courier_return_stash_items"
 		"Ability4"					"courier_take_stash_items"
-		"Ability5"					"courier_transfer_items"	
-		"Ability6"					"courier_burst"		
+		"Ability5"					"courier_transfer_items"
+		"Ability6"					"courier_burst"
 		"Ability7"					"courier_morph"
 		"Ability8"					"courier_take_stash_and_transfer_items"
 		"Ability9"					"courier_transfer_items_to_other_player"
@@ -9491,7 +9491,7 @@
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
 		"MovementSpeed"				"350"		// Speed
 		"MovementTurnRate"			"0.5"		// Turning rate.
-	
+
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyGoldMin"				"175"		// Gold earned min.
@@ -9510,7 +9510,7 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_COURIER"
-		
+
 		// Vision
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"350"		// Range of vision during day light.
@@ -9522,9 +9522,9 @@
 
 		//Inventory
 		"HasInventory"				"1"
-		
+
 		"IdleExpression"			"scenes/default_idle.vcd"
-		
+
 		"WakesNeutrals"				"0"
 	}
 
@@ -9543,13 +9543,13 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
-		"Ability1"					"courier_return_to_base"			
-		"Ability2"					"courier_return_stash_items"		
-		"Ability3"					"courier_take_stash_items"			
-		"Ability4"					"courier_transfer_items"  	
-		"Ability5"					"courier_go_to_secretshop"				
-		"Ability6"					"courier_burst"						
-		
+		"Ability1"					"courier_return_to_base"
+		"Ability2"					"courier_return_stash_items"
+		"Ability3"					"courier_take_stash_items"
+		"Ability4"					"courier_transfer_items"
+		"Ability5"					"courier_go_to_secretshop"
+		"Ability6"					"courier_burst"
+
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"10"		// Physical protection.
@@ -9558,14 +9558,14 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
-		"HealthBarOffset"			"140"	
+		"HealthBarOffset"			"140"
 
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"			// Type of locomotion - ground, air
 		"MovementSpeed"				"275"		// Speed
 		"MovementTurnRate"			"0.5"		// Turning rate.
-	
+
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"349"			// Experience earn.
@@ -9585,7 +9585,7 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_COURIER"
-		
+
 		// Vision
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"200"		// Range of vision during day light.
@@ -9599,7 +9599,7 @@
 		"HasInventory"				"1"
 
 		"IdleExpression"			"scenes/default_idle.vcd"
-		
+
 		"WakesNeutrals"				"0"
 	}
 

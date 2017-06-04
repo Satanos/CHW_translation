@@ -45,8 +45,10 @@ function modifier_sauron_decay:DeclareFunctions()
 end
 
 function modifier_sauron_decay:GetModifierDamageOutgoing_Percentage()
-	if self:GetParent():HasTalent("special_bonus_unique_sauron") then
-        return self:GetParent():FindTalentValue("special_bonus_unique_sauron") + self:GetAbility():GetSpecialValueFor("damage_reduction_pct")
+	if IsServer() then
+		if self:GetParent():HasTalent("special_bonus_unique_sauron") then
+	      return self:GetParent():FindTalentValue("special_bonus_unique_sauron") + self:GetAbility():GetSpecialValueFor("damage_reduction_pct")
+		end
 	end
 	return self:GetAbility():GetSpecialValueFor("damage_reduction_pct")
 end

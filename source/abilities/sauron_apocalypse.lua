@@ -13,7 +13,7 @@ function sauron_apocalypse:OnSpellStart ()
     local duration = self:GetSpecialValueFor ("wave_duration")
 
     local kv = {duration = duration}
-    CreateModifierThinker (self:GetCaster (), self, "sauron_apocalypse_thinker", kv, self:GetCursorPosition (), self:GetCaster ():GetTeamNumber (), false)
+    CreateModifierThinker (self:GetCaster(), self, "sauron_apocalypse_thinker", kv, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 end
 
 sauron_apocalypse_thinker = class ( {})

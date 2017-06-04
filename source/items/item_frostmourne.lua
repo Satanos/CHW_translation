@@ -7,7 +7,7 @@ end
 
 function item_frostmourne:GetCooldown(iLevel)
     if self:GetCaster():GetUnitName() == "npc_dota_hero_sand_king" or self:GetCaster():GetUnitName() == "npc_dota_hero_skeleton_king" then
-        return 60 
+        return 60
     end
     return self.BaseClass.GetCooldown( self, iLevel )
 end
@@ -123,8 +123,11 @@ function modifier_item_frostmourne:OnAttackLanded (params)
             local hAbility = self:GetAbility ()
             params.target:AddNewModifier (self:GetCaster (), self:GetAbility (), "modifier_item_frostmourne_slowing", { duration = 5 })
             local cold_attack_damage = hAbility:GetSpecialValueFor ("cold_attack_damage")
-            if params.target:IsBuilding() then 
+            if params.target:IsBuilding() then
                 cold_attack_damage = cold_attack_damage / 2
+            end
+            if self:GetParent():IsIllusion() then 
+              return nil
             end
             EmitSoundOn ("Hero_Ancient_Apparition.Attack", params.target)
             ApplyDamage ( { attacker = hAbility:GetCaster (), victim = params.target, ability = hAbility, damage = cold_attack_damage, damage_type = DAMAGE_TYPE_PURE })

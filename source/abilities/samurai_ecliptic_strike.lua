@@ -45,9 +45,6 @@ function modifier_samurai_ecliptic_strike:OnAttackLanded( params )
 								if target:GetUnitName() == "npc_dota_warlock_golem_1" then
 									return nil
 								end
-								if target:GetUnitName() == "npc_dota_boss_thanos" then
-									return nil
-								end
                 local Damage = ( self:GetAbility():GetSpecialValueFor( "crit_mult" )*target:GetMaxHealth()) / 100.0
                 table = {attacker = self:GetParent(), victim = target, ability = self:GetAbility(), damage = Damage, damage_type = DAMAGE_TYPE_PHYSICAL}
                 ApplyDamage( table )

@@ -1,3 +1,6 @@
+LinkLuaModifier( "modifier_zoom_damage_speed", "abilities/zoom_damage_speed.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_zoom_damage_speed_caster", "abilities/zoom_damage_speed.lua", LUA_MODIFIER_MOTION_NONE )
+
 zoom_damage_speed = class({})
 
 function zoom_damage_speed:OnSpellStart()
@@ -29,4 +32,9 @@ function zoom_damage_speed:OnSpellStart()
   }
   ApplyDamage(damageTable)
 
+
+	if hTarget:GetHealth() <= 0 then
+		self:GetCaster():SetBaseMoveSpeed(self:GetCaster():GetBaseMoveSpeed() + 5)
+		hTarget:SetBaseMoveSpeed(hTarget:GetBaseMoveSpeed() - 5)
+	end
 end

@@ -47,10 +47,19 @@ function collector_passive_modifier:IsPurgable()
 	return false
 end
 
+function collector_passive_modifier:OnCreated(args)
+	self.speed = self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	if IsServer() then
+		if self:GetCaster():HasTalent("special_bonus_unique_collector") then
+				self.speed = self:GetAbility():GetSpecialValueFor("bonus_attack_speed") + 120
+		end
+	end
+end
+
 function collector_passive_modifier:DeclareFunctions()
 	return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 end
 
 function collector_passive_modifier:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	return self.speed
 end

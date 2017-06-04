@@ -7,7 +7,7 @@ function palpatine_lightnings:GetCastRange (vLocation, hTarget)
 end
 
 function palpatine_lightnings:GetAOERadius ()
-    return 450
+    return 400
 end
 
 function palpatine_lightnings:GetCooldown (nLevel)

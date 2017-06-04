@@ -15,16 +15,19 @@ function modifier_po_degen_aura:OnCreated(htable)
 end
 
 function modifier_po_degen_aura:OnIntervalThink()
-	local parent = self:GetParent()
-	local caster = self:GetParent()
-  local units = FindUnitsInRadius( self:GetCaster():GetTeamNumber(), self:GetCaster():GetOrigin(), self:GetCaster(), 350, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false )
-	if #units > 0 then
-  		for _,vic in pairs(units) do
-  			if RollPercentage(self:GetAbility():GetSpecialValueFor("chance")) then
-          EmitSoundOn ("DOTA_Item.SoulRing.Activate", vic)
-          ApplyDamage({victim = vic, attacker = caster, damage = vic:GetHealth()*(self:GetAbility():GetSpecialValueFor("hp_remove")/100), damage_type = DAMAGE_TYPE_PURE})
-        end
-  		end
+	if IsServer() then
+		local parent = self:GetParent()
+		local caster = self:GetParent()
+	  local units = FindUnitsInRadius( self:GetCaster():GetTeamNumber(), self:GetCaster():GetOrigin(), self:GetCaster(), 350, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false )
+		if #units > 0 then
+	  		for _,vic in pairs(units) do
+	  			if RollPercentage(self:GetAbility():GetSpecialValueFor("chance")) then
+	          EmitSoundOn ("DOTA_Item.SoulRing.Activate", vic)
+	          ApplyDamage({victim = vic, attacker = caster, damage = vic:GetHealth()*(self:GetAbility():GetSpecialValueFor("hp_remove")/100), damage_type = DAMAGE_TYPE_PURE})
+	        end
+	  		end
+		end
+		self.agility = self:GetParent():GetAgility()
 	end
 end
 
@@ -34,4 +37,15 @@ end
 
 function modifier_po_degen_aura:IsHidden()
     return true
+end
+
+function modifier_po_degen_aura:DeclareFunctions()
+	local funcs = {
+    MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
+  }
+	return funcs
+end
+
+function modifier_po_degen_aura:GetModifierMoveSpeedBonus_Constant( params )
+    return self.agility
 end

@@ -29,9 +29,9 @@ end
 
 function modifier_item_monarh_bow:DeclareFunctions ()
     local funcs = {
-        MODIFIER_PROPERTY_HEALTH_BONUS,
-        MODIFIER_PROPERTY_MANA_BONUS,
         MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+        MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+        MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
         MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
         MODIFIER_PROPERTY_EVASION_CONSTANT,
         MODIFIER_EVENT_ON_ATTACK_LANDED
@@ -50,14 +50,12 @@ function modifier_item_monarh_bow:GetModifierBonusStats_Agility (params)
     return hAbility:GetSpecialValueFor ("bonus_agility")
 end
 
-function modifier_item_monarh_bow:GetModifierHealthBonus (params)
-    local hAbility = self:GetAbility ()
-    return hAbility:GetSpecialValueFor ("bonus_health")
+function modifier_item_monarh_bow:GetModifierBonusStats_Strength( params )
+    return self:GetAbility():GetSpecialValueFor( "bonus_strength" )
 end
 
-function modifier_item_monarh_bow:GetModifierManaBonus (params)
-    local hAbility = self:GetAbility ()
-    return hAbility:GetSpecialValueFor ("bonus_mana")
+function modifier_item_monarh_bow:GetModifierBonusStats_Intellect( params )
+    return self:GetAbility():GetSpecialValueFor( "bonus_intellect" )
 end
 
 function modifier_item_monarh_bow:GetModifierEvasion_Constant (params)

@@ -19,14 +19,14 @@ function item_shine_of_sea:OnSpellStart()
         EmitSoundOn("Item.GuardianGreaves.Target", caster)
         EmitSoundOn("Item.GuardianGreaves.Activate", caster)
         local nearby_allied_units = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-        
-        for i, nearby_ally in ipairs(nearby_allied_units) do  --Restore health and play a particle effect for every found ally.    
+
+        for i, nearby_ally in ipairs(nearby_allied_units) do  --Restore health and play a particle effect for every found ally.
             EmitSoundOn("DOTA_Item.Mekansm.Target", nearby_ally)
             ParticleManager:CreateParticle("particles/items2_fx/mekanism_recipient.vpcf", PATTACH_ABSORIGIN_FOLLOW, nearby_ally)
             nearby_ally:Purge(false, true, false, true, false)
             ParticleManager:CreateParticle("particles/items2_fx/mekanism.vpcf", PATTACH_ABSORIGIN_FOLLOW, nearby_ally)
             nearby_ally:Heal(self:GetSpecialValueFor("heal") + (nearby_ally:GetMaxHealth() * 0.05), caster)
-        end 
+        end
     end
 end
 
@@ -82,10 +82,13 @@ end
 
 function item_shine_of_sea_modifier:OnTakeDamage( params )
     if params.unit == self:GetParent() then
+				if self:GetParent():IsIllusion() then
+					return nil
+				end
         self.damage = self.damage + params.damage
         if self.damage >= self:GetAbility():GetSpecialValueFor("damage_cleanse") then
              self.damage = 0
-            if IsServer() then 
+            if IsServer() then
                 local caster = self:GetParent()
                 self:GetParent():Purge(false, true, false, true, false)
                 EmitSoundOn("Item.GuardianGreaves.Target", self:GetParent())
@@ -99,7 +102,7 @@ function item_shine_of_sea_modifier:OnTakeDamage( params )
 
                 for i, target in ipairs(targets) do  --Restore health and play a particle effect for every found ally.
                     target:AddNewModifier(caster, self:GetAbility(), "item_shine_of_sea_modifier_reduce_modifier", {duration = 4})
-                    ApplyDamage({attacker = caster, victim = target, damage = 200, damage_type = DAMAGE_TYPE_MAGICAL, ability = self}) 
+                    ApplyDamage({attacker = caster, victim = target, damage = 200, damage_type = DAMAGE_TYPE_MAGICAL, ability = self})
                     EmitSoundOn("DOTA_Item.DiffusalBlade.Target", caster)
                     target:Stop()
                 end

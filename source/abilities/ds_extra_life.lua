@@ -32,7 +32,7 @@ end
 
 function modifier_ds_extra_life:DeclareFunctions()
     local funcs = {
-        MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+        MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
     }
 
     return funcs
@@ -40,6 +40,6 @@ end
 
 --------------------------------------------------------------------------------
 
-function modifier_ds_extra_life:GetModifierAttackSpeedBonus_Constant ( params )
+function modifier_ds_extra_life:GetModifierBaseAttackTimeConstant ( params )
     return self.speed
 end

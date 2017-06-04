@@ -26,14 +26,16 @@ function modifier_bolt_passive:OnIntervalThink()
         if #units > 0 then
             for _,target in pairs(units) do
 				if target then
-					if target:HasModifier("modifier_bolt_passive_dummy") then
-						return
-					end
-					target:AddNewModifier( self:GetCaster(), self, "modifier_bolt_passive_dummy", { duration = 3.5 } )
-					target:AddNewModifier( self:GetCaster(), self, "modifier_stunned", { duration = self:GetAbility():GetSpecialValueFor("duration") } )
-					ApplyDamage({attacker = self:GetCaster(), victim = target, damage = self:GetAbility():GetAbilityDamage(), ability = self:GetAbility(), damage_type = DAMAGE_TYPE_MAGICAL})
-	   				break
-				end	
+						if target:HasModifier("modifier_bolt_passive_dummy") then
+							return
+						end
+						if not target:IsMagicImmune() then
+							target:AddNewModifier( self:GetCaster(), self, "modifier_bolt_passive_dummy", { duration = 3.5 } )
+							target:AddNewModifier( self:GetCaster(), self, "modifier_stunned", { duration = self:GetAbility():GetSpecialValueFor("duration") } )
+							ApplyDamage({attacker = self:GetCaster(), victim = target, damage = self:GetAbility():GetAbilityDamage(), ability = self:GetAbility(), damage_type = DAMAGE_TYPE_MAGICAL})
+	   					break
+						end
+				end
 			end
         end
     end

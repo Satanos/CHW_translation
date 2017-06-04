@@ -63,18 +63,24 @@ function modifier_echoe_shield:OnTakeDamage( params )
             end
             local damage = params.damage
             local pop_pfx = ParticleManager:CreateParticle("particles/items2_fx/orchid_pop.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
-            ParticleManager:SetParticleControl(pop_pfx, 0, target:GetAbsOrigin()) 
+            ParticleManager:SetParticleControl(pop_pfx, 0, target:GetAbsOrigin())
             ParticleManager:ReleaseParticleIndex( pop_pfx );
             EmitSoundOn("Hero_Pugna.NetherWard.Target", self:GetParent())
 
             local nFXIndex = ParticleManager:CreateParticle("particles/echo_shield/echo_shield_reflect.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
-            ParticleManager:SetParticleControl(nFXIndex, 0, self:GetParent():GetAbsOrigin()) 
+            ParticleManager:SetParticleControl(nFXIndex, 0, self:GetParent():GetAbsOrigin())
             ParticleManager:ReleaseParticleIndex( nFXIndex );
             if target:GetClassname() == "ent_dota_fountain" then
                return
-            else
-                target:ModifyHealth(target:GetHealth() - damage, self:GetAbility(), true, 0)
             end
+            ApplyDamage ( {
+                victim = target,
+                attacker = self:GetParent(),
+                damage = params.damage,
+                damage_type = params.damage_type,
+                ability = self:GetAbility(),
+                damage_flags = DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_HPLOSS,
+            })
         end
     end
 end
@@ -84,10 +90,10 @@ if modifier_item_echoe_shield == nil then
 end
 
 function modifier_item_echoe_shield:IsHidden()
-    return true 
+    return true
 end
 
-function modifier_item_echoe_shield:DeclareFunctions() 
+function modifier_item_echoe_shield:DeclareFunctions()
     local funcs = {
         MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
         MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
@@ -140,7 +146,7 @@ function modifier_item_echoe_shield:OnTakeDamage( params )
                 if random <= chance then
                     ApplyDamage({attacker = self:GetParent(), victim = target, ability = self:GetAbility(), damage = damage*2, damage_type = DAMAGE_TYPE_PURE})
                     self:GetParent():SetHealth( self:GetParent():GetHealth() + damage)
-                    ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_dmg.vpcf", PATTACH_POINT_FOLLOW, target)         
+                    ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_dmg.vpcf", PATTACH_POINT_FOLLOW, target)
                     EmitSoundOn( "Hero_Oracle.FalsePromise.Damaged", target )
                 end
             end

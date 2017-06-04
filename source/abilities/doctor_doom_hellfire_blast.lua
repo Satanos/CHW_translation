@@ -1,5 +1,5 @@
 doctor_doom_hellfire_blast = class ( {})
-
+LinkLuaModifier( "modifier_doctor_doom_hellfire_blast",	"abilities/doctor_doom_hellfire_blast.lua", LUA_MODIFIER_MOTION_NONE )
 
 function doctor_doom_hellfire_blast:OnSpellStart ()
     local info = {
@@ -37,13 +37,33 @@ function doctor_doom_hellfire_blast:OnProjectileHit (hTarget, vLocation)
         }
 
         ApplyDamage (damage)
-        hTarget:AddNewModifier (self:GetCaster (), self, "modifier_disarmed", { duration = disarm_duration } )
-        hTarget:AddNewModifier (self:GetCaster (), self, "modifier_stunned", { duration = self:GetSpecialValueFor("stun") } )
+        hTarget:AddNewModifier (self:GetCaster (), self, "modifier_doctor_doom_hellfire_blast", { duration = disarm_duration } )
+        hTarget:AddNewModifier (self:GetCaster (), self, "modifier_stunned", { duration = 0.1 } )
     end
 
     return true
 end
 
+modifier_doctor_doom_hellfire_blast = class({})
 
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
+function modifier_doctor_doom_hellfire_blast:IsDebuff()
+	return true
+end
+
+
+function modifier_doctor_doom_hellfire_blast:IsPurgable(  )
+	return false
+end
+
+
+function modifier_doctor_doom_hellfire_blast:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
+
+	return funcs
+end
+
+function modifier_doctor_doom_hellfire_blast:GetModifierMoveSpeedBonus_Percentage( params )
+	return self:GetAbility():GetSpecialValueFor("stun")
+end

@@ -50,7 +50,7 @@ function modifier_diablo_burning_attacks:OnAttackLanded (params)
     if IsServer () then
         if params.attacker == self:GetParent () then
            if self:GetAbility():IsCooldownReady() then
-                if not params.target:IsBuilding() then
+                if not params.target:IsBuilding() and not params.target:IsAncient() then
     	           params.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_diablo_burning_target", {duration = self:GetAbility():GetSpecialValueFor("burn_duration")})
     	           params.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = self:GetAbility():GetSpecialValueFor("ministun_duration")})
     	           self:GetAbility():PayManaCost()
@@ -78,6 +78,9 @@ function modifier_diablo_burning_target:OnCreated(event)
     if IsServer() then
         local thinker = self:GetParent()
         local ability = self:GetAbility()
+				if thinker:IsBuilding() or thinker:IsAncient() then
+					self:Destroy()
+				end
         EmitSoundOn("Hero_DoomBringer.InfernalBlade.Target", thinker)
         ApplyDamage({attacker = self:GetAbility():GetCaster(), victim = self:GetParent(), ability = self:GetAbility(), damage = (self:GetAbility():GetSpecialValueFor("burn_damage_pct")/100)*self:GetParent():GetMaxHealth()+self:GetAbility():GetSpecialValueFor("burn_damage"), damage_type = self:GetAbility():GetAbilityDamageType()})
         self:StartIntervalThink(1)

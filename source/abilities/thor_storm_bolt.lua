@@ -4,6 +4,13 @@ function thor_storm_bolt:GetAOERadius()
 	return self:GetSpecialValueFor( "bolt_aoe" )
 end
 
+function thor_storm_bolt:GetAbilityTextureName()
+	if self:GetCaster():HasModifier("modifier_thor_sulfuras") then
+		return "custom/thor_stun_sulfuras"
+	end
+	return "custom/thor_stun"
+end
+
 
 function thor_storm_bolt:OnAbilityPhaseStart()
 	local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_sven/sven_spell_storm_bolt_lightning.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster() )
@@ -22,9 +29,12 @@ end
 function thor_storm_bolt:OnSpellStart()
 	local vision_radius = self:GetSpecialValueFor( "vision_radius" )
 	local bolt_speed = self:GetSpecialValueFor( "bolt_speed" )
-
+	local ntfx = "particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf"
+	if self:GetCaster():HasModifier("modifier_thor_sulfuras") then
+		ntfx = "particles/econ/items/wraith_king/wraith_king_ti6_bracer/wraith_king_ti6_hellfireblast.vpcf"
+	end
 	local info = {
-			EffectName = "particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf",
+			EffectName = ntfx,
 			Ability = self,
 			iMoveSpeed = bolt_speed,
 			Source = self:GetCaster(),

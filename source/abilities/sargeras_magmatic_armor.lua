@@ -46,7 +46,7 @@ function modifier_sargeras_magmatic_armor:OnIntervalThink()
 		local hAbility = self:GetAbility()
 		local iDamage = hAbility:GetSpecialValueFor( "damage_interval" )
 		if self:GetCaster():HasTalent("special_bonus_unique_sargeras") then
-	        iDamage = self:GetCaster():FindTalentValue("special_bonus_unique_sargeras") + hAbility:GetSpecialValueFor( "damage_interval" )
+	     iDamage = self:GetCaster():FindTalentValue("special_bonus_unique_sargeras") + hAbility:GetSpecialValueFor( "damage_interval" )
 		end
 		local damage = {
 			victim = self:GetParent(),
@@ -55,7 +55,9 @@ function modifier_sargeras_magmatic_armor:OnIntervalThink()
 			damage_type = DAMAGE_TYPE_PURE,
 			ability = hAbility
 		}
-		ApplyDamage( damage )
+		if not self:GetParent():IsTower() then 
+			ApplyDamage( damage )
+		end
 	end
 end
 

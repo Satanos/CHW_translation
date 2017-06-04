@@ -62,12 +62,15 @@ function modifier_infest_hide:OnCreated(table)
         self:GetParent():SetModelScale(0.004)
         self.target = self:GetAbility():GetCursorTarget()
         self:StartIntervalThink(0.03)
+
+        self:GetAbility():SetActivated(false)
     end
 end
 
 function modifier_infest_hide:OnDestroy()
 	if IsServer() then
         self:GetParent():SetModelScale(self.scale)
+        self:GetAbility():SetActivated(true)
         self.target = nil
     end
 end
@@ -77,7 +80,15 @@ function modifier_infest_hide:OnIntervalThink()
         if self.target:IsAlive() == false then
             self:Destroy()
         end
-        self:GetParent():SetAbsOrigin(self.target:GetAbsOrigin())
+        for i = 0, 5, 1 do
+      		local current_item = self:GetCaster():GetItemInSlot(i)
+      		if current_item ~= nil then
+      			if current_item:GetName() == "item_heart" or current_item:GetName() == "item_heart_2" or current_item:GetName() == "item_boots_of_protection" then  --Refresher Orb does not refresh itself.
+      				current_item:StartCooldown(5)
+      			end
+      		end
+      	end
+       self:GetParent():SetAbsOrigin(self.target:GetAbsOrigin())
     end
 end
 
@@ -136,8 +147,10 @@ function modifier_infest_buff:OnCreated(params)
         self:GetParent():SetMana(self:GetParent():GetMaxMana())
 
         self.regen = 0
+        self.regen_mana = 0
         if self:GetCaster():HasScepter() then
-            self.regen = self:GetAbility():GetSpecialValueFor("bonus_regen_scepter")
+            self.regen = self:GetCaster():GetHealthRegen()*2
+            self.regen_mana = self:GetCaster():GetManaRegen()*2
         end
     end
 end
@@ -153,6 +166,10 @@ function modifier_infest_buff:OnIntervalThink()
        if self:GetCaster():HasModifier("modifier_infest_hide") == false then
             self:Destroy()
        end
+       if self:GetCaster():HasScepter() then
+           self.regen = self:GetCaster():GetHealthRegen()*2
+           self.regen_mana = self:GetCaster():GetManaRegen()*2
+       end
     end
 end
 
@@ -165,7 +182,8 @@ function modifier_infest_buff:DeclareFunctions()
         MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
         MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
         MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-        MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+        MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+        MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
     }
 
     return funcs
@@ -173,6 +191,10 @@ end
 
 function modifier_infest_buff:GetModifierConstantHealthRegen( params )
     return self.regen
+end
+
+function modifier_infest_buff:GetModifierConstantManaRegen(args)
+    return self.regen_mana
 end
 
 function modifier_infest_buff:GetModifierBonusStats_Agility( params )
@@ -185,8 +207,4 @@ end
 
 function modifier_infest_buff:GetModifierBonusStats_Intellect( params )
     return self.int
-end
-
-function modifier_infest_buff:GetDisableHealing( params )
-    return 1
 end
